@@ -1,0 +1,165 @@
+:root {
+    --r1speed: 30s;
+    --bouncespeed: 1.5s;
+
+}
+
+body {
+    background-color: #000;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 75px;
+    perspective: 10em;
+    perspective-origin: 50% calc(50% - 2.5em);
+    overflow: hidden;
+}
+
+.scene {
+    position: relative;
+    transform-style: preserve-3d;
+    animation: sceneRotate var(--r1speed) infinite linear;
+}
+
+@keyframes sceneRotate {
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+.cube {
+    height: 2em;
+    width: 2em;
+    transform-style: preserve-3d;
+    position: absolute;
+    bottom: -1em;
+    left: -1em;
+    animation:
+        cubebounce var(--bouncespeed) infinite linear;
+}
+
+@keyframes cubebounce {
+    0%, 100% {
+        height: 1.5em;
+    }
+
+    8%, 93.5% {
+        height: 2em;
+    }
+}
+
+
+.left,
+.right,
+.front,
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #0ff7;
+    box-shadow: 0 0 0.5em #000a inset;
+}
+
+.front {
+    transform: translate3d(0, 0, 1em);
+}
+
+
+.top {
+    position: absolute;
+    width: 2em;
+    height: 2em;
+    background-color: #0ff7;
+    transform: translateY(-50%) rotateX(90deg);
+    box-shadow: 0 0 0.5em #000a inset;
+}
+
+.bottom {
+    position: absolute;
+    width: 2em;
+    height: 2em;
+    bottom: 0;
+    box-shadow: 0 0 0.5em #000a;
+    background: #0007;
+    transform: translateY(50%) rotateX(90deg);
+
+}
+
+.right {
+    transform: rotateY(90deg) translateZ(1em);
+}
+
+.left {
+    transform: rotateY(270deg) translateZ(1em);
+}
+
+.back {
+    transform: rotateY(180deg) translateZ(1em);
+}
+
+.ball {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: rgb(78, 204, 247);
+    position: absolute;
+    bottom: 1em;
+    left: -0.5em;
+    background-image: radial-gradient(circle at top,
+            rgb(77, 205, 248),
+            #000);
+    animation:
+        ballBounce var(--bouncespeed) infinite ease-out,
+        sceneRotate var(--r1speed) infinite linear reverse;
+
+
+}
+
+@keyframes ballBounce {
+    0%, 100% {
+        bottom: 0.5em;
+    }
+
+    50% {
+        bottom: 3em;
+        animation-timing-function: ease-in;
+    }
+}
+
+
+.ballshadow {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    animation: ballshadow var(--bouncespeed) infinite ease-out;
+    background-image: radial-gradient(#0007, #0000 50%);
+}
+
+@keyframes ballshadow {
+    0%, 8%, 93.5%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(2);
+        opacity: 0.5;
+        animation-timing-function: ease-in;
+    }
+}
+
+.floor {
+    position: absolute;
+    top: 1em;
+    transform: translate(-50%, -50%) rotateX(90deg);
+    width: 15em;
+    height: 15em;
+    background-image:
+        radial-gradient(#0000, #000 75%),
+        repeating-conic-gradient(from 45deg,
+            #111 0deg 90deg,
+            #222 90deg 180deg);
+    background-size: 100%, 1em 1em;
+
+}
